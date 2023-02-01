@@ -1,0 +1,106 @@
+﻿@using System.Collections.ObjectModel;
+<IgbGrid AutoGenerate="false"
+        Id="grid"
+        Data="GridData"
+        Name="grid"
+        RowSelection="GridSelectionMode.Multiple"
+        @ref="grid">
+    <IgbColumn Field="ID"
+                Header="ID"
+                Name="ID"
+                @ref="iD">
+    </IgbColumn>
+    <IgbColumn Name="ContactName"
+                @ref="contactName"
+                Field="ContactName"
+                Header="ContactName">
+    </IgbColumn>
+    <IgbColumn Name="Country"
+                Field="Country"
+                Header="Country"
+                Sortable="false"
+                Editable="false"
+                Width="450px">
+    </IgbColumn>
+</IgbGrid>
+
+<button @onclick="OnClick">選択行データを取得</button>
+
+@code {
+    private IgbGrid? grid;
+    private IgbColumn? iD;
+    private IgbColumn? contactName;
+    private IgbColumn? country;
+
+    private CustomersData? _gridData = null;
+    public CustomersData? GridData
+    {
+        get
+        {
+            if (_gridData == null)
+            {
+                _gridData = new CustomersData();
+            }
+            return _gridData;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+    }
+
+    public class CustomersDataItem
+    {
+        public string? ID { get; set; }
+        public string? ContactName { get; set; }
+        public string? Country { get; set; }
+    }
+
+    public class CustomersData
+        : List<CustomersDataItem>
+    {
+        public CustomersData()
+        {
+            this.Add(new CustomersDataItem()
+                {
+                    ID = @"ALFKI",
+                    ContactName = @"Maria Anders",
+                    Country = @"Japan",
+                });
+            this.Add(new CustomersDataItem()
+                {
+                    ID = @"ANATR",
+                    ContactName = @"Ana Trujillo",
+                    Country = @"Unated States",
+                });
+            this.Add(new CustomersDataItem()
+                {
+                    ID = @"ANTON",
+                    ContactName = @"Antonio Moreno",
+                    Country = @"Japan",
+                });
+            this.Add(new CustomersDataItem()
+                {
+                    ID = @"AROUT",
+                    ContactName = @"Thomas Hardy",
+                    Country = @"Bulgaria",
+                });
+            this.Add(new CustomersDataItem()
+                {
+                    ID = @"BERGS",
+                    ContactName = @"Christina Berglund",
+                    Country = @"Uruguay",
+                });
+        }
+    }
+
+    void OnClick()
+    {
+        var selectedRows = grid!.SelectedRows.ToList();
+
+        foreach (CustomersDataItem item in selectedRows)
+        {
+            //...
+        }
+    }
+}
